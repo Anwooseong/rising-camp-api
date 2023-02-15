@@ -1,0 +1,3 @@
+# Project exclude paths
+/api-server-spring-boot-jdbc/out/
+/api-server-spring-boot-jdbc/out/production/classes/
