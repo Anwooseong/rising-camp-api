@@ -54,6 +54,9 @@ public enum BaseResponseStatus {
 
     //[PATCH] /users/{userIdx}
     MODIFY_FAIL_USERNAME(false,4014,"유저네임 수정 실패"),
+    MODIFY_FAIL_PHONE_AND_ADDRESS(false,4015,"전화번호와 주소 변경 실패"),
+    MODIFY_FAIL_PRICE_AND_STOCK(false,4016,"상품 가격과 재고 변경 실패"),
+    MODIFY_FAIL_TITLE_AND_COMMENT(false,4016,"리뷰 제목과 상세 내용 변경 실패"),
 
     PASSWORD_ENCRYPTION_ERROR(false, 4011, "비밀번호 암호화에 실패하였습니다."),
     PASSWORD_DECRYPTION_ERROR(false, 4012, "비밀번호 복호화에 실패하였습니다.");
