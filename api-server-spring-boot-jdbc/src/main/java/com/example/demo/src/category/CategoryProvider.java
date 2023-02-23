@@ -5,19 +5,17 @@ import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.src.category.model.GetItemsRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class CategoryProvider {
     private final CategoryDao categoryDao;
-    public List<GetItemsRes> getItems(int categoryId) throws BaseException {
-        try {
-            List<GetItemsRes> getItemsRes = categoryDao.getItems(categoryId);
-            return getItemsRes;
-        } catch (Exception e) {
-            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
-        }
+    public List<GetItemsRes> getItems(int categoryId) {
+        List<GetItemsRes> getItemsRes = categoryDao.getItems(categoryId);
+        return getItemsRes;
     }
 }

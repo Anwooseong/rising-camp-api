@@ -1,4 +1,4 @@
-package com.example.demo.src.order.dto;
+package com.example.demo.src.category.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,21 +6,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseOrder {
+public class PostCategoryReq {
 
     @NotNull
-    private int orderId;
+    @Size(max = 45)
+    private String categoryName;
 
-    @NotNull
-    @Size(max = 200)
-    private String address;
-
-    @NotNull
-    private int totalPrice;
+    private int parentCategoryId;
 }

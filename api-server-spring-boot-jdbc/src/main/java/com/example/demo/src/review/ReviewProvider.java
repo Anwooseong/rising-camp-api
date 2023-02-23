@@ -6,28 +6,22 @@ import com.example.demo.src.review.model.CheckPatchReview;
 import com.example.demo.src.review.model.GetDetailReviewRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class ReviewProvider {
     private final ReviewDao reviewDao;
-    public List<GetDetailReviewRes> getReviews(int itemId) throws BaseException {
-        try {
-            List<GetDetailReviewRes> getDetailReviewRes = reviewDao.getReviews(itemId);
-            return getDetailReviewRes;
-        }catch (Exception e){
-            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
-        }
+    public List<GetDetailReviewRes> getReviews(int itemId) {
+        List<GetDetailReviewRes> getDetailReviewRes = reviewDao.getReviews(itemId);
+        return getDetailReviewRes;
     }
 
     public CheckPatchReview getReview(int reviewId) throws BaseException{
-        try {
-            CheckPatchReview getReview = reviewDao.getReview(reviewId);
-            return getReview;
-        }catch (Exception exception){
-            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
-        }
+        CheckPatchReview getReview = reviewDao.getReview(reviewId);
+        return getReview;
     }
 }

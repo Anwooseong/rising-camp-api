@@ -5,22 +5,20 @@ import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.src.basket.model.GetBasketRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class BasketProvider {
 
     private final BasketDao basketDao;
 
-    public List<GetBasketRes> getBaskets(int userId) throws BaseException {
-        try {
-            List<GetBasketRes> getBasketRes = basketDao.getBaskets(userId);
-            return getBasketRes;
-        } catch (Exception e) {
-            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
-        }
+    public List<GetBasketRes> getBaskets(int userId) {
+        List<GetBasketRes> getBasketRes = basketDao.getBaskets(userId);
+        return getBasketRes;
     }
 }
 

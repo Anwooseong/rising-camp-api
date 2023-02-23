@@ -59,9 +59,9 @@ public class ItemDao {
     }
 
     public void changeItem(int itemId, PostItemReq item) {
-        String changeItemQuery = "insert into Item (title, comments, price, stock, image, companyId, sellerId, createAt)" +
-                " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        Object[] createItemParams = new Object[]{item.getTitle(), item.getComments(), item.getPrice(), item.getStock(), item.getImageUrl(), item.getCompanyId(), item.getSellerId(), LocalDateTime.now()};
+        String changeItemQuery = "update Item set title =?, comments=?, price=?, stock=?, image=?, companyId=?, sellerId=?, createAt=? where itemId = ?";
+
+        Object[] createItemParams = new Object[]{item.getTitle(), item.getComments(), item.getPrice(), item.getStock(), item.getImageUrl(), item.getCompanyId(), item.getSellerId(), LocalDateTime.now(), itemId};
         this.jdbcTemplate.update(changeItemQuery, createItemParams);
     }
 

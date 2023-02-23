@@ -1,8 +1,7 @@
 package com.example.demo.src.user;
 
-import com.example.demo.src.user.model.GetUserRes;
-import com.example.demo.src.user.model.PatchUserReq;
-import com.example.demo.src.user.model.PostUserReq;
+import com.example.demo.src.user.model.*;
+import com.example.demo.src.users.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -72,5 +71,25 @@ public class UserDao {
     public int deleteUser(int userId) {
         String deleteUserQuery = "delete from User where userId = ?";
         return this.jdbcTemplate.update(deleteUserQuery, userId);
+    }
+
+    public User getPwd(PostLoginReq postLoginReq) {
+        String getPwdQuery = "select userId, name, uid, password, phone, address from User where uid = ? and status = 'A'";
+        return this.jdbcTemplate.queryForObject(getPwdQuery,
+                (rs, rowNum) -> new User(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6)
+                ),
+                postLoginReq.getUid());
+    }
+
+    public int checkUid(String uid) {
+        String checkUidQuery = "select exists(select uid from User where uid = ?)";
+        String checkUidParams = uid;
+        return this.jdbcTemplate.queryForObject(checkUidQuery, int.class, checkUidParams);
     }
 }

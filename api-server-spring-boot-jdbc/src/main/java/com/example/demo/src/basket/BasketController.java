@@ -6,6 +6,7 @@ import com.example.demo.src.basket.model.GetBasketRes;
 import com.example.demo.src.basket.model.PostBasketReq;
 import com.example.demo.src.basket.model.PostBasketRes;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,31 +21,19 @@ public class BasketController {
 
     @GetMapping("")
     public BaseResponse<List<GetBasketRes>> getBasket(@RequestParam("userId") int userId) {
-        try {
-            List<GetBasketRes> getBasketRes = basketProvider.getBaskets(userId);
-            return new BaseResponse<>(getBasketRes);
-        } catch (BaseException e) {
-            return new BaseResponse<>((e.getStatus()));
-        }
+        List<GetBasketRes> getBasketRes = basketProvider.getBaskets(userId);
+        return new BaseResponse<>(getBasketRes);
     }
 
     @PostMapping("")
-    public BaseResponse<PostBasketRes> postBasket(@RequestBody PostBasketReq postBasketReq) {
-        try {
-            PostBasketRes postBasketRes = basketService.postBasket(postBasketReq);
-            return new BaseResponse<>(postBasketRes);
-        } catch (BaseException e) {
-            return new BaseResponse<>((e.getStatus()));
-        }
+    public BaseResponse<PostBasketRes> postBasket(@Validated @RequestBody PostBasketReq postBasketReq) throws BaseException {
+        PostBasketRes postBasketRes = basketService.postBasket(postBasketReq);
+        return new BaseResponse<>(postBasketRes);
     }
 
     @DeleteMapping("{basketId}")
-    public BaseResponse<String> deleteBasket(@PathVariable int basketId) {
-        try {
-            String result = basketService.deleteBasket(basketId);
-            return new BaseResponse<>(result);
-        } catch (BaseException e) {
-            return new BaseResponse<>((e.getStatus()));
-        }
+    public BaseResponse<String> deleteBasket(@PathVariable int basketId) throws BaseException {
+        String result = basketService.deleteBasket(basketId);
+        return new BaseResponse<>(result);
     }
 }

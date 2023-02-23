@@ -10,46 +10,36 @@ import com.example.demo.src.order.model.GetOrdersRes;
 import com.example.demo.src.order.model.GetPaymentRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class OrderProvider {
     private final OrderDao orderDao;
 
-    public List<GetOrdersRes> getOrders(int userId) throws BaseException {
-        try {
-            List<GetOrdersRes> getOrdersResList = new ArrayList<>();
+    public List<GetOrdersRes> getOrders(int userId) {
+        List<GetOrdersRes> getOrdersResList = new ArrayList<>();
 
-            List<Order> orders = orderDao.getOrders(userId);
-            for (Order order : orders) {
-                getOrdersResList.add(new GetOrdersRes(order.getOrderId(), order.getName(), order.getOrderDate(), orderDao.getOrderDetailItems(order.getOrderId())));
-            }
-            return getOrdersResList;
-        } catch (Exception e) {
-            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        List<Order> orders = orderDao.getOrders(userId);
+        for (Order order : orders) {
+            getOrdersResList.add(new GetOrdersRes(order.getOrderId(), order.getName(), order.getOrderDate(), orderDao.getOrderDetailItems(order.getOrderId())));
         }
+        return getOrdersResList;
     }
 
-    public GetOrderDetailsRes getOrderDetails(int orderId) throws BaseException {
-        try {
-            BaseOrder baseOrder = orderDao.getBaseOrder(orderId);
-            String arriveDate = orderDao.getArriveDate(orderId);
-            List<OrderDetailItems> orderDetailItemsList = orderDao.getOrderDetailItems(orderId);
-            return new GetOrderDetailsRes(baseOrder.getOrderId(), baseOrder.getAddress(), baseOrder.getTotalPrice(), arriveDate, orderDetailItemsList);
-        } catch (Exception e) {
-            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
-        }
+    public GetOrderDetailsRes getOrderDetails(int orderId) {
+        BaseOrder baseOrder = orderDao.getBaseOrder(orderId);
+        String arriveDate = orderDao.getArriveDate(orderId);
+        List<OrderDetailItems> orderDetailItemsList = orderDao.getOrderDetailItems(orderId);
+        return new GetOrderDetailsRes(baseOrder.getOrderId(), baseOrder.getAddress(), baseOrder.getTotalPrice(), arriveDate, orderDetailItemsList);
     }
 
-    public GetPaymentRes getPayment(int paymentId) throws BaseException{
-        try {
-            GetPaymentRes getPaymentRes = orderDao.getPayment(paymentId);
-            return getPaymentRes;
-        }catch (Exception e){
-            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
-        }
+    public GetPaymentRes getPayment(int paymentId){
+        GetPaymentRes getPaymentRes = orderDao.getPayment(paymentId);
+        return getPaymentRes;
     }
 }

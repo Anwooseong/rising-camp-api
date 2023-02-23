@@ -2,13 +2,10 @@ package com.example.demo.src.order;
 
 import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
-import com.example.demo.src.order.model.GetOrderDetailsRes;
-import com.example.demo.src.order.model.GetOrdersRes;
-import com.example.demo.src.order.model.GetPaymentRes;
+import com.example.demo.src.order.model.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,31 +17,25 @@ public class OrderController {
 
     @GetMapping("/orders/{userId}")
     public BaseResponse<List<GetOrdersRes>> getOrders(@PathVariable int userId) {
-        try {
-            List<GetOrdersRes> getOrdersResList = orderProvider.getOrders(userId);
-            return new BaseResponse<>(getOrdersResList);
-        } catch (BaseException e) {
-            return new BaseResponse<>((e.getStatus()));
-        }
+        List<GetOrdersRes> getOrdersResList = orderProvider.getOrders(userId);
+        return new BaseResponse<>(getOrdersResList);
     }
 
     @GetMapping("/order-details/{orderId}")
     public BaseResponse<GetOrderDetailsRes> getOrderDetails(@PathVariable int orderId) {
-        try {
-            GetOrderDetailsRes getOrderDetails = orderProvider.getOrderDetails(orderId);
-            return new BaseResponse<>(getOrderDetails);
-        } catch (BaseException e) {
-            return new BaseResponse<>((e.getStatus()));
-        }
+        GetOrderDetailsRes getOrderDetails = orderProvider.getOrderDetails(orderId);
+        return new BaseResponse<>(getOrderDetails);
     }
 
     @GetMapping("/payments/{paymentId}")
     public BaseResponse<GetPaymentRes> getPaymentRes(@PathVariable int paymentId) {
-        try {
-            GetPaymentRes getPaymentRes = orderProvider.getPayment(paymentId);
-            return new BaseResponse<>(getPaymentRes);
-        }catch (BaseException e){
-            return new BaseResponse<>((e.getStatus()));
-        }
+        GetPaymentRes getPaymentRes = orderProvider.getPayment(paymentId);
+        return new BaseResponse<>(getPaymentRes);
+    }
+
+    @PostMapping("/orders")
+    public BaseResponse<PostOrderRes> createOrder(@Validated @RequestBody PostOrderReq postOrderReq) throws  BaseException{
+        PostOrderRes postOrderRes = orderService.createOrder(postOrderReq);
+        return new BaseResponse<>(postOrderRes);
     }
 }

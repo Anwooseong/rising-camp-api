@@ -3,10 +3,11 @@ package com.example.demo.src.category;
 import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
 import com.example.demo.src.category.model.GetItemsRes;
+import com.example.demo.src.category.model.PostCategoryReq;
+import com.example.demo.src.category.model.PostCategoryRes;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,11 +20,13 @@ public class CategoryController {
 
     @GetMapping("/categories/{categoryId}")
     public BaseResponse<List<GetItemsRes>> getItemsRes(@PathVariable int categoryId) {
-        try {
-            List<GetItemsRes> getItemsRes = categoryProvider.getItems(categoryId);
-            return new BaseResponse<>(getItemsRes);
-        } catch (BaseException e) {
-            return new BaseResponse<>((e.getStatus()));
-        }
+        List<GetItemsRes> getItemsRes = categoryProvider.getItems(categoryId);
+        return new BaseResponse<>(getItemsRes);
+    }
+
+    @PostMapping("/categories")
+    public BaseResponse<PostCategoryRes> createCategory(@Validated @RequestBody PostCategoryReq postCategoryReq) throws BaseException {
+        PostCategoryRes postCategoryRes = categoryService.createCategory(postCategoryReq);
+        return new BaseResponse<>(postCategoryRes);
     }
 }

@@ -29,8 +29,10 @@ public enum BaseResponseStatus {
     POST_USERS_EMPTY_EMAIL(false, 2015, "이메일을 입력해주세요."),
     POST_USERS_INVALID_EMAIL(false, 2016, "이메일 형식을 확인해주세요."),
     POST_USERS_EXISTS_EMAIL(false,2017,"중복된 이메일입니다."),
-    POST_USERS_EXISTS_PHONE(false,2017,"중복된 전화번호입니다."),
-    POST_USERS_EMPTY_PHONE(false,2017,"전화번호를 입력해주세요."),
+    POST_USERS_EXISTS_PHONE(false,2018,"중복된 전화번호입니다."),
+    POST_USERS_EXISTS_UID(false,2019,"중복된 아이디입니다."),
+    POST_USERS_EMPTY_SIGNUP(false,2020,"빈칸을 확인한 후 다시 입력해주세요."),
+    POST_CATEGORY_NAME(false,2020,"중복된 카테고리명이 있습니다."),
 
 
 
@@ -50,6 +52,7 @@ public enum BaseResponseStatus {
      * 4000 : Database, Server 오류
      */
     DATABASE_ERROR(false, 4000, "데이터베이스 연결에 실패하였습니다."),
+
     SERVER_ERROR(false, 4001, "서버와의 연결에 실패하였습니다."),
 
     //[PATCH] /users/{userIdx}
@@ -62,7 +65,10 @@ public enum BaseResponseStatus {
     DELETE_FAIL_BASKET(false,4020,"삭제할 장바구니가 없습니다."),
 
     PASSWORD_ENCRYPTION_ERROR(false, 4011, "비밀번호 암호화에 실패하였습니다."),
-    PASSWORD_DECRYPTION_ERROR(false, 4012, "비밀번호 복호화에 실패하였습니다.");
+    PASSWORD_DECRYPTION_ERROR(false, 4012, "비밀번호 복호화에 실패하였습니다."),
+    EMPTY_RESULT(false, 4013, "데이터베이스 조회 시 원하는 데이터가 존재하지 않습니다."),
+    BAD_SQL(false,4014, "쿼리문이 올바르게 작성돼지 않았습니다."),
+    SQL_PARAMETERS(false,4015, "쿼리문 파라미터를 다시 확인하세요.");
 
 
     // 5000 : 필요시 만들어서 쓰세요

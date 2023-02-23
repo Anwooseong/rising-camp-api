@@ -4,6 +4,8 @@ import com.example.demo.src.order.dto.BaseOrder;
 import com.example.demo.src.order.dto.Order;
 import com.example.demo.src.order.dto.OrderDetailItems;
 import com.example.demo.src.order.model.GetPaymentRes;
+import com.example.demo.src.order.model.PostOrderReq;
+import com.example.demo.src.order.model.PostOrderRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -70,5 +72,25 @@ public class OrderDao {
                         rs.getInt(4),
                         rs.getString(5)
                 ),paymentId);
+    }
+
+    public int createOrder(PostOrderReq postOrderReq) {
+        String createOrderQuery = "insert into Orders(userId, address) VALUES (?,?)";
+        Object[] createOrderParams = new Object[]{postOrderReq.getUserId(), postOrderReq.getAddress()};
+        this.jdbcTemplate.update(createOrderQuery, createOrderParams);
+
+        String lastInsertIdQuery = "select last_insert_id()";
+        return this.jdbcTemplate.queryForObject(lastInsertIdQuery, int.class);
+    }
+
+    public PostOrderRes findById(int insertId) {
+        String findByIdQuery = "select orderId, userId, address from Orders where orderId = ?";
+        return this.jdbcTemplate.queryForObject(findByIdQuery,
+                (rs, rowNum)->new PostOrderRes(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3)
+                )
+                ,insertId);
     }
 }
