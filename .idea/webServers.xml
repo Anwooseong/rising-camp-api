@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="17011042-9797-464d-98e6-e32ffdac7a5b" name="rising_api" url="http://springsummer.site">
+        <fileTransfer rootFolder="/var/www/rising-camp-api/api-server-spring-boot-jdbc" accessType="SFTP" host="15.165.113.167" port="22" sshConfigId="20ba0bdf-4764-419d-9de5-553dcf72f437" sshConfig="ubuntu@15.165.113.167:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

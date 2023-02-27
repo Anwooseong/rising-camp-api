@@ -18,15 +18,11 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 public class OrderService {
-    private OrderDao orderDao;
+    private final OrderDao orderDao;
 
     @Transactional
     public PostOrderRes createOrder(PostOrderReq postOrderReq) throws BaseException {
-        int insertId = 2;
-        if (orderDao.createOrder(postOrderReq) == null){
-            throw new BaseException(BaseResponseStatus.DUPLICATED_EMAIL);
-        }
-        System.out.println(insertId);
+        int insertId = orderDao.createOrder(postOrderReq);
         PostOrderRes postOrderRes = orderDao.findById(insertId);
         return postOrderRes;
     }

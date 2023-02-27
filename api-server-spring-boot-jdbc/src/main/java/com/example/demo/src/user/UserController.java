@@ -56,8 +56,7 @@ public class UserController {
             return new BaseResponse<>(INVALID_USER_JWT);
         }
         PatchUserReq patchUserReq = new PatchUserReq(userId, user.getPhone(), user.getAddress());
-        userService.modifyUser(patchUserReq);
-        GetUserRes findUser = userProvider.getUser(userId);
+        GetUserRes findUser = userService.modifyUser(patchUserReq);
         return new BaseResponse<>(findUser);
     }
 

@@ -2,6 +2,7 @@ package com.example.demo.src.user;
 
 import com.example.demo.GlobalExceptionHandler;
 import com.example.demo.config.BaseException;
+import com.example.demo.src.user.model.GetUserRes;
 import com.example.demo.src.user.model.PatchUserReq;
 import com.example.demo.src.user.model.PostUserReq;
 import com.example.demo.src.user.model.PostUserRes;
@@ -45,11 +46,13 @@ public class UserService {
     }
 
     @Transactional
-    public void modifyUser(PatchUserReq patchUserReq) throws BaseException{
+    public GetUserRes modifyUser(PatchUserReq patchUserReq) throws BaseException{
         int result = userDao.modifyUserPhoneAndAddress(patchUserReq);
         if(result == 0){
             throw new BaseException(MODIFY_FAIL_PHONE_AND_ADDRESS);
         }
+        GetUserRes user = userProvider.getUser(patchUserReq.getUserId());
+        return user;
     }
 
     @Transactional
