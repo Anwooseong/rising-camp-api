@@ -4,6 +4,9 @@ import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
 import com.example.demo.src.user.model.*;
 import com.example.demo.utils.JwtService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +24,7 @@ public class UserController {
     private final UserService userService;
     private final JwtService jwtService;
 
+    @Operation(summary = "회원가입", description = "RequestBody를 받아 회원가입")
     @PostMapping("")
     public BaseResponse<PostUserRes> createUser(@Validated @RequestBody PostUserReq postUserReq){
 //        if (postUserReq.getPhone() == null) {
