@@ -25,7 +25,7 @@ public class CategoryController {
     }
 
     @PostMapping("/categories")
-    public BaseResponse<PostCategoryRes> createCategory(@Validated @RequestBody PostCategoryReq postCategoryReq) throws BaseException {
+    public BaseResponse<PostCategoryRes> createCategory(@Validated @RequestBody PostCategoryReq postCategoryReq) {
         PostCategoryRes postCategoryRes = categoryService.createCategory(postCategoryReq);
         return new BaseResponse<>(postCategoryRes);
     }

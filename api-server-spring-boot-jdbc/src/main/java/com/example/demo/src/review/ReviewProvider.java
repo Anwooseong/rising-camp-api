@@ -20,7 +20,7 @@ public class ReviewProvider {
         return getDetailReviewRes;
     }
 
-    public CheckPatchReview getReview(int reviewId) throws BaseException{
+    public CheckPatchReview getReview(int reviewId){
         CheckPatchReview getReview = reviewDao.getReview(reviewId);
         return getReview;
     }

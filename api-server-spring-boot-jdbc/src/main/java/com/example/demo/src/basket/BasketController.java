@@ -26,13 +26,13 @@ public class BasketController {
     }
 
     @PostMapping("")
-    public BaseResponse<PostBasketRes> postBasket(@Validated @RequestBody PostBasketReq postBasketReq) throws BaseException {
+    public BaseResponse<PostBasketRes> postBasket(@Validated @RequestBody PostBasketReq postBasketReq) {
         PostBasketRes postBasketRes = basketService.postBasket(postBasketReq);
         return new BaseResponse<>(postBasketRes);
     }
 
     @DeleteMapping("{basketId}")
-    public BaseResponse<String> deleteBasket(@PathVariable int basketId) throws BaseException {
+    public BaseResponse<String> deleteBasket(@PathVariable int basketId) {
         String result = basketService.deleteBasket(basketId);
         return new BaseResponse<>(result);
     }

@@ -9,27 +9,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class ItemService {
 
     private final ItemDao itemDao;
 
-    @Transactional
-    public PostItemRes createItem(PostItemReq postItemReq) throws BaseException{
+    public PostItemRes createItem(PostItemReq postItemReq){
         int itemId = itemDao.createItem(postItemReq);
         return new PostItemRes(itemId, postItemReq.getTitle(), postItemReq.getComments(), postItemReq.getPrice(), postItemReq.getStock(), postItemReq.getImageUrl());
     }
 
-    @Transactional
-    public void modifyItem(PatchItemReq patchItemReq) throws  BaseException{
+    public void modifyItem(PatchItemReq patchItemReq) {
         int result = itemDao.modifyPriceAndStock(patchItemReq);
         if (result == 0) {
             throw new BaseException(BaseResponseStatus.MODIFY_FAIL_PRICE_AND_STOCK);
         }
     }
 
-    @Transactional
-    public String deleteItem(int itemId) throws BaseException {
+    public String deleteItem(int itemId)  {
         int result = itemDao.deleteItem(itemId);
         if (result == 0) {
             throw new BaseException(BaseResponseStatus.DELETE_FAIL_ITEM);
@@ -37,8 +34,7 @@ public class ItemService {
         return "itemId : " + itemId + " 삭제 완료";
     }
 
-    @Transactional
-    public PutItemRes putItem(int itemId, PostItemReq item) throws BaseException {
+    public PutItemRes putItem(int itemId, PostItemReq item) {
         itemDao.changeItem(itemId, item);
         PutItemRes putItemRes = itemDao.findByItem(itemId);
         return putItemRes;

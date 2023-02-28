@@ -16,12 +16,11 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class OrderService {
     private final OrderDao orderDao;
 
-    @Transactional
-    public PostOrderRes createOrder(PostOrderReq postOrderReq) throws BaseException {
+    public PostOrderRes createOrder(PostOrderReq postOrderReq)  {
         int insertId = orderDao.createOrder(postOrderReq);
         PostOrderRes postOrderRes = orderDao.findById(insertId);
         return postOrderRes;

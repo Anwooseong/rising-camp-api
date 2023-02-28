@@ -6,13 +6,15 @@ import com.example.demo.src.category.model.PostCategoryReq;
 import com.example.demo.src.category.model.PostCategoryRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class CategoryService {
 
     private final CategoryDao categoryDao;
-    public PostCategoryRes createCategory(PostCategoryReq postCategoryReq) throws BaseException {
+    public PostCategoryRes createCategory(PostCategoryReq postCategoryReq) {
         if(categoryDao.findCategory(postCategoryReq)==1){
             throw new BaseException(BaseResponseStatus.POST_CATEGORY_NAME);
         }

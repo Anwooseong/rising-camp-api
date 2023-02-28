@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
         return new BaseResponse<>(new BaseException(BaseResponseStatus.BAD_SQL).getStatus());
     }
 
-    @ExceptionHandler(SQLException.class)
+    @ExceptionHandler(UncategorizedSQLException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public BaseResponse handlerBaseException(UncategorizedSQLException e) {
         System.out.println(e.getClass());

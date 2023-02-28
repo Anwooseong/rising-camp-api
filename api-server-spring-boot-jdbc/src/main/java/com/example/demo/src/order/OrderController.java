@@ -34,7 +34,7 @@ public class OrderController {
     }
 
     @PostMapping("/orders")
-    public BaseResponse<PostOrderRes> createOrder(@Validated @RequestBody PostOrderReq postOrderReq) throws  BaseException{
+    public BaseResponse<PostOrderRes> createOrder(@Validated @RequestBody PostOrderReq postOrderReq)  {
         PostOrderRes postOrderRes = orderService.createOrder(postOrderReq);
         return new BaseResponse<>(postOrderRes);
     }

@@ -5,8 +5,6 @@ import com.example.demo.src.user.model.GetUserRes;
 import com.example.demo.src.user.model.PostLoginReq;
 import com.example.demo.src.user.model.PostLoginRes;
 import com.example.demo.src.user.model.User;
-import com.example.demo.src.users.model.PostLoginsRes;
-import com.example.demo.src.users.model.Users;
 import com.example.demo.utils.JwtService;
 import com.example.demo.utils.SHA256;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +38,7 @@ public class UserProvider {
     }
 
     @Transactional
-    public PostLoginRes login(PostLoginReq postLoginReq) throws BaseException {
+    public PostLoginRes login(PostLoginReq postLoginReq) {
         User user = userDao.getPwd(postLoginReq);
         String encryptPwd;
         try {

@@ -11,18 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class ReviewService {
     private final ReviewDao reviewDao;
 
-    @Transactional
-    public PostReviewRes createReview(PostReviewReq postReviewReq) throws BaseException {
+    public PostReviewRes createReview(PostReviewReq postReviewReq) {
         int reviewId = reviewDao.createReview(postReviewReq);
         return new PostReviewRes(reviewId, postReviewReq.getTitle(), postReviewReq.getComment());
     }
 
-    @Transactional
-    public void modifyReview(PatchReviewReq patchReviewReq) throws BaseException{
+    public void modifyReview(PatchReviewReq patchReviewReq){
         int result = reviewDao.modifyTitleAndComment(patchReviewReq);
         if (result == 0) {
             throw new BaseException(BaseResponseStatus.MODIFY_FAIL_TITLE_AND_COMMENT);

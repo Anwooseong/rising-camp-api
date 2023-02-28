@@ -10,19 +10,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class BasketService {
 
     private final BasketDao basketDao;
 
-    @Transactional
-    public PostBasketRes postBasket(PostBasketReq postBasketReq) throws BaseException {
+    public PostBasketRes postBasket(PostBasketReq postBasketReq) {
         int basketId = basketDao.postBasket(postBasketReq);
         return new PostBasketRes(basketId, postBasketReq.getUserId(), postBasketReq.getItemId(), postBasketReq.getItemCount());
     }
 
-    @Transactional
-    public String deleteBasket(int basketId) throws BaseException{
+    public String deleteBasket(int basketId) {
         int result = basketDao.deleteBasket(basketId);
         if (result == 0) {
             throw new BaseException(BaseResponseStatus.DELETE_FAIL_BASKET);

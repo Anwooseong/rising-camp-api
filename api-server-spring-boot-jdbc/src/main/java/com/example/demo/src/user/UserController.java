@@ -22,16 +22,16 @@ public class UserController {
     private final JwtService jwtService;
 
     @PostMapping("")
-    public BaseResponse<PostUserRes> createUser(@Validated @RequestBody PostUserReq postUserReq) throws BaseException{
-        if (postUserReq.getPhone() == null) {
-            return new BaseResponse<>(POST_USERS_EMPTY_SIGNUP);
-        }
+    public BaseResponse<PostUserRes> createUser(@Validated @RequestBody PostUserReq postUserReq){
+//        if (postUserReq.getPhone() == null) {
+//            return new BaseResponse<>(POST_USERS_EMPTY_SIGNUP);
+//        }
         PostUserRes postUsersRes = userService.createUser(postUserReq);
         return new BaseResponse<>(postUsersRes);
     }
 
     @PostMapping("/login")
-    public BaseResponse<PostLoginRes> login(@Validated @RequestBody PostLoginReq postLoginReq) throws  BaseException{
+    public BaseResponse<PostLoginRes> login(@Validated @RequestBody PostLoginReq postLoginReq) {
         PostLoginRes postLoginRes = userProvider.login(postLoginReq);
         return new BaseResponse<>(postLoginRes);
     }
@@ -50,7 +50,7 @@ public class UserController {
     }
 
     @PatchMapping("{userId}")
-    public BaseResponse<GetUserRes> patchUser(@PathVariable("userId") int userId,@Validated @RequestBody User user) throws BaseException{
+    public BaseResponse<GetUserRes> patchUser(@PathVariable("userId") int userId,@Validated @RequestBody User user) {
         int userIdByJwt = jwtService.getUserId();
         if(userId != userIdByJwt){
             return new BaseResponse<>(INVALID_USER_JWT);
@@ -61,7 +61,7 @@ public class UserController {
     }
 
     @DeleteMapping("{userId}")
-    public BaseResponse<String> deleteUser(@PathVariable int userId) throws BaseException{
+    public BaseResponse<String> deleteUser(@PathVariable int userId){
         String result = userService.deleteUser(userId);
         return new BaseResponse<>(result);
     }

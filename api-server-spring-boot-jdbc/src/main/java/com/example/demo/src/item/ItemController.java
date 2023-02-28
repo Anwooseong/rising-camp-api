@@ -16,7 +16,7 @@ public class ItemController {
     private final ItemProvider itemProvider;
 
     @PostMapping("")
-    public BaseResponse<PostItemRes> createItem(@Validated @RequestBody PostItemReq postItemReq) throws BaseException{
+    public BaseResponse<PostItemRes> createItem(@Validated @RequestBody PostItemReq postItemReq){
         PostItemRes postItemRes = itemService.createItem(postItemReq);
         return new BaseResponse<>(postItemRes);
     }
@@ -28,7 +28,7 @@ public class ItemController {
     }
 
     @PatchMapping("{itemId}")
-    public BaseResponse<GetItemRes> patchItem(@PathVariable int itemId,@Validated @RequestBody Item item) throws BaseException{
+    public BaseResponse<GetItemRes> patchItem(@PathVariable int itemId,@Validated @RequestBody Item item){
         PatchItemReq patchItemReq = new PatchItemReq(itemId, item.getPrice(), item.getStock());
         itemService.modifyItem(patchItemReq);
         GetItemRes getItemRes = itemProvider.getItem(itemId);
@@ -36,13 +36,13 @@ public class ItemController {
     }
 
     @PutMapping("{itemId}")
-    public BaseResponse<PutItemRes> changeItem(@PathVariable int itemId,@Validated @RequestBody PostItemReq item) throws BaseException{
+    public BaseResponse<PutItemRes> changeItem(@PathVariable int itemId,@Validated @RequestBody PostItemReq item){
         PutItemRes putItemRes = itemService.putItem(itemId, item);
         return new BaseResponse<>(putItemRes);
     }
 
     @DeleteMapping("{itemId}")
-    public BaseResponse<String> deleteItem(@PathVariable int itemId) throws BaseException {
+    public BaseResponse<String> deleteItem(@PathVariable int itemId) {
         String result = itemService.deleteItem(itemId);
         return new BaseResponse<>(result);
     }

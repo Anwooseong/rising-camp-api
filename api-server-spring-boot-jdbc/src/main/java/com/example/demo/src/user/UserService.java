@@ -16,15 +16,14 @@ import static com.example.demo.config.BaseResponseStatus.*;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 public class UserService {
 
     private final UserDao userDao;
     private final UserProvider userProvider;
     private final JwtService jwtService;
 
-    @Transactional
-    public PostUserRes createUser(PostUserReq postUserReq) throws BaseException {
+    public PostUserRes createUser(PostUserReq postUserReq) {
         if (userProvider.checkUid(postUserReq.getUid()) == 1) {
             throw new BaseException(POST_USERS_EXISTS_UID);
         }
@@ -45,8 +44,7 @@ public class UserService {
         return new PostUserRes(userId, postUserReq.getName(), jwt);
     }
 
-    @Transactional
-    public GetUserRes modifyUser(PatchUserReq patchUserReq) throws BaseException{
+    public GetUserRes modifyUser(PatchUserReq patchUserReq) {
         int result = userDao.modifyUserPhoneAndAddress(patchUserReq);
         if(result == 0){
             throw new BaseException(MODIFY_FAIL_PHONE_AND_ADDRESS);
@@ -55,8 +53,7 @@ public class UserService {
         return user;
     }
 
-    @Transactional
-    public String deleteUser(int userId) throws BaseException{
+    public String deleteUser(int userId) {
         int result = userDao.deleteUser(userId);
         if(result == 1){
             return "userId : " + userId + " 삭제 완료";

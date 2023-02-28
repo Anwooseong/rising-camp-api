@@ -17,7 +17,7 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping("/reviews")
-    public BaseResponse<PostReviewRes> createReview(@Validated @RequestBody PostReviewReq postReviewReq) throws BaseException {
+    public BaseResponse<PostReviewRes> createReview(@Validated @RequestBody PostReviewReq postReviewReq) {
         PostReviewRes postReviewRes = reviewService.createReview(postReviewReq);
         return new BaseResponse<>(postReviewRes);
     }
@@ -29,7 +29,7 @@ public class ReviewController {
     }
 
     @PatchMapping("/reviews/{reviewId}")
-    public BaseResponse<CheckPatchReview> patchReview(@PathVariable int reviewId,@Validated @RequestBody Review review) throws BaseException{
+    public BaseResponse<CheckPatchReview> patchReview(@PathVariable int reviewId,@Validated @RequestBody Review review){
         PatchReviewReq patchReviewReq = new PatchReviewReq(reviewId, review.getTitle(), review.getComment());
         reviewService.modifyReview(patchReviewReq);
         CheckPatchReview getReview = reviewProvider.getReview(reviewId);
