@@ -29,10 +29,16 @@ public class ReviewController {
     }
 
     @PatchMapping("/reviews/{reviewId}")
-    public BaseResponse<CheckPatchReview> patchReview(@PathVariable int reviewId,@Validated @RequestBody Review review){
+    public BaseResponse<CheckPatchReview> patchReview(@PathVariable int reviewId, @Validated @RequestBody Review review) {
         PatchReviewReq patchReviewReq = new PatchReviewReq(reviewId, review.getTitle(), review.getComment());
         reviewService.modifyReview(patchReviewReq);
         CheckPatchReview getReview = reviewProvider.getReview(reviewId);
         return new BaseResponse<>(getReview);
+    }
+
+    @GetMapping("/reviews")
+    public BaseResponse<List<GetDetailReviewRes>> getPagingReviews(@RequestParam("itemId") int itemId, @RequestParam("page") int page) {
+        List<GetDetailReviewRes> getDetailReviewRes = reviewProvider.getPagingReviews(itemId, page);
+        return new BaseResponse<>(getDetailReviewRes);
     }
 }

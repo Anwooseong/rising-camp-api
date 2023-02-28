@@ -24,4 +24,9 @@ public class ReviewProvider {
         CheckPatchReview getReview = reviewDao.getReview(reviewId);
         return getReview;
     }
+
+    public List<GetDetailReviewRes> getPagingReviews(int itemId, int page) {
+        List<GetDetailReviewRes> getPagingRes = reviewDao.getPagingReviews(itemId, page);
+        return getPagingRes;
+    }
 }

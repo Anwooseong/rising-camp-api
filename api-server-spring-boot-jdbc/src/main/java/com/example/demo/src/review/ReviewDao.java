@@ -58,4 +58,16 @@ public class ReviewDao {
         Object[] modifyReviewParams = new Object[]{patchReviewReq.getTitle(), patchReviewReq.getComment(), patchReviewReq.getReviewId()};
         return this.jdbcTemplate.update(modifyReviewQuery, modifyReviewParams);
     }
+
+    public List<GetDetailReviewRes> getPagingReviews(int itemId, int page) {
+        String getPagingReviewsQuery = "select Item.title, Review.title, comment from Review inner join Item on Item.itemId = Review.itemId where Review.itemId = ? limit 3 offset ?";
+        int startOffset = (page - 1) * 3;
+        Object[] getDetailPagingReviewParams = new Object[]{itemId, startOffset};
+        return this.jdbcTemplate.query(getPagingReviewsQuery,
+                (rs, rowNum) -> new GetDetailReviewRes(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3)
+                ), getDetailPagingReviewParams);
+    }
 }
